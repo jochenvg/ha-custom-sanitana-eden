@@ -35,11 +35,11 @@ class SanitanaEdenConfigFlow(ConfigFlow, domain=DOMAIN):
             self._name = user_input[CONF_NAME]
             self._host = user_input[CONF_HOST]
             try:
-                info: dict[str, Any] = await async_get_info(self._host)
+                info: dict[str, str | intv] = await async_get_info(self._host)
             except DeviceConnectionError:
                 errors["base"] = "cannot_connect"
             else:
-                await self.async_set_unique_id(format_mac(info["mac_ap"]))
+                await self.async_set_unique_id(format_mac(info.get("mac_ap")))
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
                     title=self._name,

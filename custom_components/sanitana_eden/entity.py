@@ -21,14 +21,14 @@ class SanitanaEdenEntity(CoordinatorEntity):
             connections={
                 (
                     CONNECTION_NETWORK_MAC,
-                    format_mac(coordinator.config_entry.data["mac_ap"]),
+                    format_mac(coordinator.config_entry.data.get("mac_ap")),
                 ),
                 (
                     CONNECTION_NETWORK_MAC,
-                    format_mac(coordinator.config_entry.data["mac_sta"]),
+                    format_mac(coordinator.config_entry.data.get("mac_sta")),
                 ),
             },
-            name=coordinator.config_entry.data["name"],
+            name=coordinator.config_entry.data.get("name"),
             manufacturer=MANUFACTURER,
             model=MODEL,
         )
