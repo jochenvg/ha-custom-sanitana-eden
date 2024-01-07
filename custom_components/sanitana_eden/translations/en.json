@@ -1,0 +1,60 @@
+{
+    "title": "Sanitana EDEN Steam Shower",
+    "config": {
+      "step": {
+        "user": {
+          "description": "Connection information for your Sanitana Eden.",
+          "data": {
+            "name": "[%key:common::config_flow::data::name%]",
+            "host": "[%key:common::config_flow::data::host%]",
+            "port": "[%key:common::config_flow::data::port%]",
+            "broadcast_port": "[%key:common::config_flow::data::port%]"
+          },
+          "data_description": {
+            "name": "The name of your Sanitana Eden device in Home Assistant.",
+            "host": "The hostname or IP address of the Sanitana Eden device to connect to.",
+            "port": "The TCP port for communication with the Sanitana Eden device.",
+            "broadcast_port": "The UDP port for communication with the Sanitana Eden device."
+          }
+        },
+        "confirm": {
+          "description": "[%key:common::config_flow::description::confirm_setup%]"
+        }
+      },
+      "error": {
+        "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+        "unknown": "[%key:common::config_flow::error::unknown%]"
+      },
+      "abort": {
+        "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+        "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]",
+        "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]"
+      }
+    },
+    "entity": {
+      "sensor": {
+        "steam_temperature": {
+          "name": "Steam Temperature"
+        },
+        "steam_remaining": {
+          "name": "Steam Remaining"
+        }
+      },
+      "number": {
+        "radio_frequency": {
+          "name": "Radio Frequency"
+        },
+        "radio_volume": {
+          "name": "Radio Volume"
+        }
+      },
+      "switch": {
+        "radio": {
+          "name": "Radio"
+        },
+        "bluetooth": {
+          "name": "Bluetooth"
+        }
+      }
+    }
+}

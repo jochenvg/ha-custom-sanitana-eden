@@ -1,23 +1,23 @@
-"""Custom integration to integrate integration_blueprint with Home Assistant.
+"""Custom integration to integrate sanitana_eden with Home Assistant.
 
 For more details about this integration, please refer to
-https://github.com/ludeeus/integration_blueprint
+https://github.com/jochenvg/sanitana_eden
 """
 from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import IntegrationBlueprintApiClient
 from .const import DOMAIN
-from .coordinator import BlueprintDataUpdateCoordinator
+from .coordinator import SanitanaEdenDataUpdateCoordinator
 
 PLATFORMS: list[Platform] = [
-    Platform.SENSOR,
-    Platform.BINARY_SENSOR,
+    Platform.LIGHT,
     Platform.SWITCH,
+    Platform.NUMBER,
+    Platform.SENSOR,
+    Platform.WATER_HEATER,
 ]
 
 
@@ -25,14 +25,11 @@ PLATFORMS: list[Platform] = [
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up this integration using UI."""
     hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.entry_id] = coordinator = BlueprintDataUpdateCoordinator(
-        hass=hass,
-        client=IntegrationBlueprintApiClient(
-            username=entry.data[CONF_USERNAME],
-            password=entry.data[CONF_PASSWORD],
-            session=async_get_clientsession(hass),
-        ),
-    )
+    coordinator = SanitanaEdenDataUpdateCoordinator(hass, entry)
+    hass.data[DOMAIN][entry.entry_id] = coordinator
+
+    await coordinator.async_setup()
+
     # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
     await coordinator.async_config_entry_first_refresh()
 
@@ -45,6 +42,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Handle removal of an entry."""
     if unloaded := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
+        coordinator: SanitanaEdenDataUpdateCoordinator
+        coordinator = hass.data[DOMAIN][entry.entry_id]
+        await coordinator.async_shutdown()
         hass.data[DOMAIN].pop(entry.entry_id)
     return unloaded
 
