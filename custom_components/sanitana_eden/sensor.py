@@ -19,7 +19,7 @@ from .coordinator import SanitanaEdenDataUpdateCoordinator
 from .entity import SanitanaEdenEntity
 
 
-@dataclass(kw_only=True)
+@dataclass(kw_only=True, frozen=True)
 class SanitanaEdenSensorEntityDescription(SensorEntityDescription):
     """Describes Sanitana Eden sensor entity."""
 

@@ -1,20 +1,15 @@
 {
-    "title": "Sanitana EDEN Steam Shower",
     "config": {
       "step": {
         "user": {
           "description": "Connection information for your Sanitana Eden.",
           "data": {
             "name": "[%key:common::config_flow::data::name%]",
-            "host": "[%key:common::config_flow::data::host%]",
-            "port": "[%key:common::config_flow::data::port%]",
-            "broadcast_port": "[%key:common::config_flow::data::port%]"
+            "host": "[%key:common::config_flow::data::host%]"
           },
           "data_description": {
             "name": "The name of your Sanitana Eden device in Home Assistant.",
-            "host": "The hostname or IP address of the Sanitana Eden device to connect to.",
-            "port": "The TCP port for communication with the Sanitana Eden device.",
-            "broadcast_port": "The UDP port for communication with the Sanitana Eden device."
+            "host": "The hostname or IP address of the Sanitana Eden device to connect to."
           }
         },
         "confirm": {

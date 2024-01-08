@@ -20,9 +20,7 @@ class SanitanaEdenDataUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
         """Initialize."""
-        self.device = SanitanaEden(
-            config_entry.data.get("host"), config_entry.data.get("port")
-        )
+        self.device = SanitanaEden(config_entry.data["host"], config_entry.data["port"])
         self.config_entry = config_entry
         super().__init__(
             hass=hass,

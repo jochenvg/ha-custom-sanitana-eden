@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from dataclasses import asdict
 from typing import Any
 
 import voluptuous as vol
-from aio_sanitana_eden import DeviceConnectionError, async_get_info
+from aio_sanitana_eden import DeviceConnectionError, async_get_info, SanitanaEdenInfo
 from homeassistant.config_entries import ConfigFlow
 from homeassistant.const import CONF_HOST, CONF_NAME
 from homeassistant.data_entry_flow import FlowResult
@@ -22,8 +23,8 @@ class SanitanaEdenConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 0
     MINOR_VERSION = 1
 
-    _name: str | None = None
-    _host: str | None = None
+    _name = ""
+    _host = ""
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -35,23 +36,26 @@ class SanitanaEdenConfigFlow(ConfigFlow, domain=DOMAIN):
             self._name = user_input[CONF_NAME]
             self._host = user_input[CONF_HOST]
             try:
-                info: dict[str, str | intv] = await async_get_info(self._host)
+                info: SanitanaEdenInfo = await async_get_info(self._host)
             except DeviceConnectionError:
                 errors["base"] = "cannot_connect"
             else:
-                await self.async_set_unique_id(format_mac(info.get("mac_ap")))
-                self._abort_if_unique_id_configured()
-                return self.async_create_entry(
-                    title=self._name,
-                    data={
-                        **user_input,
-                        **info,
-                    },
-                )
+                if info.mac_ap is None or info.mac_sta is None or info.port is None:
+                    errors["base"] = "cannot_connect"
+                else:
+                    await self.async_set_unique_id(format_mac(info.mac_ap))
+                    self._abort_if_unique_id_configured()
+                    return self.async_create_entry(
+                        title=self._name,
+                        data={
+                            **asdict(info),
+                            **user_input,
+                        },
+                    )
 
         fields: dict[Any, type] = OrderedDict()
-        fields[vol.Required(CONF_NAME, default=self._name or NAME)] = str
-        fields[vol.Required(CONF_HOST, default=self._host or vol.UNDEFINED)] = str
+        fields[vol.Required(CONF_NAME, default=self._name or NAME)] = str  # type: ignore
+        fields[vol.Required(CONF_HOST, default=self._host or vol.UNDEFINED)] = str  # type: ignore
 
         return self.async_show_form(
             step_id="user",

@@ -21,7 +21,7 @@ from .coordinator import SanitanaEdenDataUpdateCoordinator
 from .entity import SanitanaEdenEntity
 
 
-@dataclass(kw_only=True)
+@dataclass(kw_only=True, frozen=True)
 class SanitanaEdenWaterHeaterEntityDescription(WaterHeaterEntityEntityDescription):
     """Describes Sanitana Eden water heater entity."""
 

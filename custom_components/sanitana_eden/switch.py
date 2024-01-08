@@ -15,7 +15,7 @@ from .coordinator import SanitanaEdenDataUpdateCoordinator
 from .entity import SanitanaEdenEntity
 
 
-@dataclass(kw_only=True)
+@dataclass(kw_only=True, frozen=True)
 class SanitanaEdenSwitchEntityDescription(SwitchEntityDescription):
     """Describes Sanitana Eden switch entity."""
 

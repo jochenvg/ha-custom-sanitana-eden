@@ -1,7 +1,7 @@
 """Custom integration to integrate sanitana_eden with Home Assistant.
 
 For more details about this integration, please refer to
-https://github.com/jochenvg/sanitana_eden
+https://github.com/jochenvg/ha-custom-sanitana-eden
 """
 from __future__ import annotations
 

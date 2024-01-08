@@ -40,17 +40,17 @@ If you want to contribute to this please read the [Contribution guidelines](CONT
 
 ***
 
-[sanitana_eden]: https://github.com/jochenvg/sanitana_eden
+[sanitana_eden]: https://github.com/jochenvg/ha-custom-sanitana-eden
 [buymecoffee]: https://www.buymeacoffee.com/jochenvg
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/jochenvg/sanitana_eden.svg?style=for-the-badge
-[commits]: https://github.com/jochenvg/sanitana_eden/commits/main
+[commits-shield]: https://img.shields.io/github/commit-activity/y/jochenvg/ha-custom-sanitana-eden.svg?style=for-the-badge
+[commits]: https://github.com/jochenvg/ha-custom-sanitana-eden/commits/main
 [discord]: https://discord.gg/Qa5fW2R
 [discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
 [exampleimg]: example.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[license-shield]: https://img.shields.io/github/license/jochenvg/sanitana_eden.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-Joakim%20Sørensen%20%40jochenvg-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/jochenvg/sanitana_eden.svg?style=for-the-badge
-[releases]: https://github.com/jochenvg/sanitana_eden/releases
+[license-shield]: https://img.shields.io/github/license/jochenvg/ha-custom-sanitana-eden.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-Jochen%20Van%20Guyse%20%40jochenvg-blue.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/jochenvg/ha-custom-sanitana-eden.svg?style=for-the-badge
+[releases]: https://github.com/jochenvg/ha-custom-sanitana-eden/releases
