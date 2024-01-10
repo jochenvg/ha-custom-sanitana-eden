@@ -98,7 +98,9 @@ class SanitanaEdenWaterHeaterEntity(SanitanaEdenEntity, WaterHeaterEntity):
         if operation_mode == STATE_OFF:
             await self.coordinator.device.steam.async_turn_off()
         elif operation_mode == STATE_ELECTRIC:
-            # await self.coordinator.device.async_steam_turn_on(self._attr_target_temperature, 15.0)
+            await self.coordinator.device.steam.async_turn_on(
+                self._attr_target_temperature, 15.0
+            )
             pass
 
     async def async_turn_on(self, **_) -> None:
