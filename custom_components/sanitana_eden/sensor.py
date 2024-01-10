@@ -24,7 +24,6 @@ class SanitanaEdenSensorEntityDescription(SensorEntityDescription):
     """Describes Sanitana Eden sensor entity."""
 
     has_entity_name: bool = True
-    exists_fn: Callable[[SanitanaEden], bool] = lambda _: True
     value_fn: Callable[[SanitanaEden], float]
 
 
