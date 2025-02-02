@@ -47,6 +47,11 @@ class SanitanaEdenDataUpdateCoordinator(DataUpdateCoordinator):
         except Exception as exception:
             raise UpdateFailed(exception) from exception
 
+    @property
+    def available(self) -> bool:
+        """Return True if entity is available."""
+        return self.device.available
+
     @callback
     def sanitana_update(self):
         """Process update from the device."""
