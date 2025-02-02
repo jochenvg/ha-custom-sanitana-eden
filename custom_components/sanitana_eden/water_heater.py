@@ -8,7 +8,7 @@ from homeassistant.components.water_heater import (
     STATE_ELECTRIC,
     STATE_OFF,
     WaterHeaterEntity,
-    WaterHeaterEntityEntityDescription,
+    WaterHeaterEntityDescription,
     WaterHeaterEntityFeature,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -22,7 +22,7 @@ from .entity import SanitanaEdenEntity
 
 
 @dataclass(kw_only=True, frozen=True)
-class SanitanaEdenWaterHeaterEntityDescription(WaterHeaterEntityEntityDescription):
+class SanitanaEdenWaterHeaterEntityDescription(WaterHeaterEntityDescription):
     """Describes Sanitana Eden water heater entity."""
 
     has_entity_name: bool = True
