@@ -29,14 +29,6 @@ class SanitanaEdenSensorEntityDescription(SensorEntityDescription):
 
 ENTITY_DESCRIPTIONS = (
     SanitanaEdenSensorEntityDescription(
-        key="steam_temperature",
-        name="Steam Temperature",
-        translation_key="steam_temperature",
-        value_fn=lambda device: device.steam.temperature,
-        native_unit_of_measurement="°C",
-        device_class=SensorDeviceClass.TEMPERATURE,
-    ),
-    SanitanaEdenSensorEntityDescription(
         key="steam_remaining",
         name="Steam Remaining",
         translation_key="steam_remaining",
