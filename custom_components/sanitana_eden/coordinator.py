@@ -31,7 +31,7 @@ class SanitanaEdenDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def async_setup(self) -> None:
         """Set up async tasks."""
-        self._remove_listener = self.device.async_add_listener(self.sanitana_update)
+        self._remove_listener = self.device.add_listener(self.sanitana_update)
         await self.device.async_setup()
 
     async def async_shutdown(self) -> None:
