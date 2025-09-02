@@ -53,6 +53,19 @@ ENTITY_DESCRIPTIONS = (
         native_step=1.0,
         icon="mdi:knob",
     ),
+    SanitanaEdenNumberEntityDescription(
+        key="steam_duration",
+        name="Steam Duration",
+        translation_key="steam_duration",
+        value_fn=lambda device: device.steam.duration,
+        set_fn=lambda device, duration: device.steam.async_set_duration(duration),
+        native_max_value=30.0,
+        native_min_value=10.0,
+        native_step=1.0,
+        icon="mdi:timer",
+        device_class=NumberDeviceClass.DURATION,
+    ),
+
 )
 
 

@@ -11,6 +11,8 @@ from .entity import SanitanaEdenEntity
 from homeassistant.components.climate import (
     ClimateEntityDescription,
     ClimateEntity,
+)
+from homeassistant.components.climate.const import (
     ClimateEntityFeature,
     HVACMode,
     HVACAction,
@@ -20,7 +22,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-
 
 @dataclass(kw_only=True, frozen=True)
 class SanitanaEdenClimateEntityDescription(ClimateEntityDescription):
@@ -56,8 +57,6 @@ class SanitanaEdenClimateEntity(SanitanaEdenEntity, ClimateEntity):
     """ClimateEntity for the Sanitana Eden."""
 
     coordinator: SanitanaEdenDataUpdateCoordinator
-    entity_description: SanitanaEdenClimateEntityDescription
-
     def __init__(
         self,
         coordinator: SanitanaEdenDataUpdateCoordinator,
@@ -70,7 +69,6 @@ class SanitanaEdenClimateEntity(SanitanaEdenEntity, ClimateEntity):
         if entity_description.name is not None and self._attr_unique_id is not None:
             self._attr_unique_id += "_" + entity_description.key
 
-        self._attr_target_temperature = 35.0
         self._attr_temperature_unit = UnitOfTemperature.CELSIUS
         self._attr_min_temp = 35.0
         self._attr_max_temp = 50.0
@@ -84,7 +82,12 @@ class SanitanaEdenClimateEntity(SanitanaEdenEntity, ClimateEntity):
     @property
     def current_temperature(self) -> float | None:
         """Return the current temperature."""
-        return float(self.coordinator.device.steam.temperature) or None
+        return self.coordinator.device.steam.current_temperature
+
+    @property
+    def target_temperature(self) -> float | None:
+        """Return the target temperature."""
+        return self.coordinator.device.steam.temperature
 
     @property
     def hvac_mode(self) -> HVACMode | None:
@@ -102,18 +105,16 @@ class SanitanaEdenClimateEntity(SanitanaEdenEntity, ClimateEntity):
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
         """Set target temperature."""
-        self._attr_target_temperature = kwargs.get(ATTR_TEMPERATURE)
-        self.async_schedule_update_ha_state()
+        if temperature := kwargs.get(ATTR_TEMPERATURE):
+            await self.coordinator.device.steam.async_set_temperature(temperature)
+            self.async_schedule_update_ha_state()
 
-    async def async_set_hvac_mode(self, *, hvac_mode: HVACMode) -> None:
+    async def async_set_hvac_mode(self, /, hvac_mode: HVACMode) -> None:
         """Set target operation mode."""
-        if hvac_mode == HVACMode.OFF:
+        if hvac_mode == HVACMode.OFF and self.coordinator.device.steam.is_on:
             await self.coordinator.device.steam.async_turn_off()
-        elif hvac_mode == HVACMode.HEAT:
-            await self.coordinator.device.steam.async_turn_on(
-                self._attr_target_temperature, 15.0
-            )
-            pass
+        elif hvac_mode == HVACMode.HEAT and not self.coordinator.device.steam.is_on:
+            await self.coordinator.device.steam.async_turn_on()
 
     async def async_turn_on(self, **_) -> None:
         """Turn the entity on."""
