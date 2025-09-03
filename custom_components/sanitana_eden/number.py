@@ -107,3 +107,4 @@ class SanitanaEdenNumberEntity(SanitanaEdenEntity, NumberEntity):
     async def async_set_native_value(self, value: float) -> None:
         """Set native value."""
         await self.entity_description.set_fn(self.coordinator.device, value)
+        self.async_schedule_update_ha_state()
